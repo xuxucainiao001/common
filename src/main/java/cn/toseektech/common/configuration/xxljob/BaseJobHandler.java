@@ -2,51 +2,57 @@ package cn.toseektech.common.configuration.xxljob;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 
-import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.IJobHandler;
 
 public abstract class BaseJobHandler extends IJobHandler {
 
-protected Logger logger = LoggerFactory.getLogger(getClass());
-	
-	private String jobName = getJobName();
-	 
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+
+	protected String jobName = toLowerCaseFirstOne(getClass().getSimpleName());
 
 	/**
 	 * 执行逻辑封装
 	 */
 	@Override
-	public ReturnT<String> execute(String param) {
-		StopWatch sw = new StopWatch(jobName);
+	public void execute() throws Exception {
+		String param = XxlJobHelper.getJobParam(); // 获取参数
+		// 测试专用逻辑
+		if ("test".equals(StringUtils.trimWhitespace(param))) {
+			logger.info("{} 任务测试执行成功!", jobName);
+			XxlJobHelper.handleSuccess();
+			return;
+		}
 		try {
-			logger.info("定时器任务{}执行开始", jobName);
-			sw.start();
-			execute0();
-			sw.stop();
-			logger.info("定时器任务{}执行结束, 执行时间: {}ms", jobName, sw.getTotalTimeMillis());
-			return IJobHandler.SUCCESS;
-		} catch (Throwable e) {
-			sw.stop();
-			logger.error("定时器任务{}执行发生异常: {}", jobName, e);
-			return IJobHandler.FAIL;
+			XxlJobHelper.handleResult(200, execute0());
+		} catch (Exception e) {
+			logger.error("{} 任务执行失败：{}", jobName, e);
+			XxlJobHelper.handleFail();
 		}
 
 	}
 
 	/**
-	 * 子类覆盖定时器业务逻辑 @Title: execute0 @Description: @Date: 2021年5月24日
-	 * 上午9:30:23 @throws Throwable
+	 *  
+	 *   @Description:子类覆盖定时器业务逻辑
+	 *   @author: xuxu
+	 *   @Title:execute0
+	 *   @return
+	 *   @throws Exception
 	 */
-	protected abstract void execute0 () throws Throwable;
+	protected abstract String execute0() throws Exception;
 
 	/**
-	 * 获取任务名称 @Title: getJobName @Description: @Date: 2021年5月24日
-	 * 上午9:30:10 @return @throws
+	 * 
+	 * @Description:获取任务名称
+	 * @author: xuxu
+	 * @Title:getJobName
+	 * @return
 	 */
 	public String getJobName() {
-		return toLowerCaseFirstOne(getClass().getSimpleName());
+		return this.jobName;
 	}
 
 	/**

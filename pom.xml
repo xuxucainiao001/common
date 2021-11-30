@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.toseektech</groupId>
-	<artifactId>common</artifactId>
+	<artifactId>commons</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>common</name>
+	<name>commons</name>
 
 
 	<properties>
@@ -17,7 +17,7 @@
 		<commons-lang3.version>3.9</commons-lang3.version>
 		<guava.version>15.0</guava.version>
 		<redisson.version>3.13.1</redisson.version>
-		<hutool.version>5.6.7</hutool.version>
+		<hutool.version>5.7.7</hutool.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<druid.version>1.1.10</druid.version>
 		<spring.version>5.2.7.RELEASE</spring.version>
@@ -31,16 +31,11 @@
 		<easy-excel.version>2.2.6</easy-excel.version>
 		<html2pdf.version>3.0.0</html2pdf.version>
 		<page-helper.version>1.3.0</page-helper.version>
-		<xxl-job.version>2.2.0</xxl-job.version>
+		<xxl-job.version>2.3.0</xxl-job.version>
+		<nacos-config.version>2.2.4.RELEASE</nacos-config.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>cn.toseektech</groupId>
-			<artifactId>translation</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -77,6 +72,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.alibaba.csp</groupId>
@@ -91,6 +92,8 @@
 			<version>${spring.boot.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -149,11 +152,8 @@
 			<version>${hutool.version}</version>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.projectlombok</groupId> <artifactId>lombok</artifactId> 
+			<version>${lombok.version}</version> </dependency> -->
 
 		<!-- easy excel -->
 		<dependency>
@@ -168,21 +168,28 @@
 			<artifactId>html2pdf</artifactId>
 			<version>${html2pdf.version}</version>
 		</dependency>
-         
-         <!-- mybaits 分页 -->
+
+		<!-- mybaits 分页 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>${page-helper.version}</version>
 		</dependency>
-		
-		
-		 <!-- 定时器任务  -->
-  
+
+
+		<!-- 定时器任务 -->
+
 		<dependency>
 			<groupId>com.xuxueli</groupId>
 			<artifactId>xxl-job-core</artifactId>
 			<version>${xxl-job.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+			<version>${nacos-config.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 

@@ -6,7 +6,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import cn.toseektech.common.enums.ResponseEnum;
-import cn.toseektech.translation.annotation.Translate;
 
 public class ResponseVO<T> implements Serializable{
 
@@ -19,7 +18,6 @@ public class ResponseVO<T> implements Serializable{
 
 	private String message= ResponseEnum.SUCCESS.getMessage();
     
-	@Translate
 	private T content;
 
 	public ResponseVO() {
